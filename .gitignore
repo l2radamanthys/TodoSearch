@@ -1,3 +1,4 @@
 *.bak
-*.py
+*.pyc
+*,pyo
 todo-list.txt

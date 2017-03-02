@@ -6,12 +6,13 @@ import os
 
 # Incluir, excluir archivos en donde desea buscar
 EXT_SEARCH = [
-    'txt',
-    #'.csv',
+    # 'txt',
+    # 'csv',
     'py',
     'js',
     'ts',
     'css',
+    'scss',
     'html',
     # Archivos C#
     'cs',  
@@ -31,8 +32,11 @@ def get_todo_marks(file_path):
     for line in open(file_path, 'r', encoding="utf8", errors='ignore').readlines():
         l += 1
         if "#todo" in line.lower():
-            pos = line.find("#todo") + 5
-            text ="[{}][{}] - {}".format(file_path, l, line[pos:])
+            pos = line.lower().find("#todo") + 5
+            comment = line[pos:].strip()
+            if comment == "":
+                comment = "*NO HAY COMENTARIOS*"
+            text ="[{}][{}] - {}\n".format(file_path, l, comment)
             result.append(text)
             print(text[:-1])
     return result

@@ -14,6 +14,7 @@ EXT_SEARCH = [
     'css',
     'scss',
     'html',
+    'hbs', #handlebars
     # Archivos C#
     'cs',
     'aspx',

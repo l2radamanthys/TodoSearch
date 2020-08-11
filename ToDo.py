@@ -15,7 +15,7 @@ EXT_SEARCH = [
     'scss',
     'html',
     # Archivos C#
-    'cs',  
+    'cs',
     'aspx',
 ]
 
@@ -23,8 +23,31 @@ EXT_SEARCH = [
 #Nombre de la carpetas que no se analizaran
 FOLDERS_IGNORE = [ #Todo
     '.git',
+    'node_modules',
+    'dist',
 ]
 
+COLORES = {
+    'red': u"\u001b[31m",
+    'reset': u"\u001b[0m",
+    'black': u"\u001b[30m",
+    'green': u"\u001b[32m",
+    'yellow': u"\u001b[33m",
+    'blue': u"\u001b[34m",
+    'magenta': u"\u001b[35m",
+    'cyan': u"\u001b[36m",
+    'white': u"\u001b[37m",
+}
+
+def colorprint(*args, **kargs):
+    try:
+        color = kargs['color']
+        kargs.pop('color', None)
+        print(COLORES[color], end='')
+        print(*args, **kargs)
+        print(COLORES['reset'], end='')
+    except:
+        print(*args, **kargs)
 
 def get_todo_marks(file_path):
     l =  0 #line number
@@ -38,7 +61,9 @@ def get_todo_marks(file_path):
                 comment = "*NO HAY COMENTARIOS*"
             text ="[{}][{}] - {}\n".format(file_path, l, comment)
             result.append(text)
-            print(text[:-1])
+            colorprint(f"[{file_path}][{l}] ", color='yellow', end='')
+            colorprint(comment, color='green')
+    print()
     return result
 
 
@@ -48,7 +73,7 @@ def main():
     else:
         sfile = 'todo-list.txt'
     fw = open(sfile, 'w', encoding="utf8")
-    print("=======================\nLista ToDo del Proyecto \n=======================")
+    colorprint("\n# Lista ToDo del Proyecto \n", color='cyan')
     fw.write("Lista ToDo del Proyecto \n=======================\n\n")
     path = os.getcwd()
     for root, d, f in os.walk(path):
